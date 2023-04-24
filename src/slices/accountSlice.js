@@ -1,8 +1,17 @@
-  import { createSlice } from '@reduxjs/toolkit'
-
+  import { createSlice , createAsyncThunk } from '@reduxjs/toolkit'
+  import axios from 'axios'
 const initialState = {
   amount: 1,
 }
+
+export const getUSerAccount = createAsyncThunk(
+  'account/getUser',
+  async (userId, thunkAPI) => {
+    const {data} = await axios.get(`http://localhost:3000/accounts/${userId}`)
+    console.log(data.amount)
+    return data.amount
+  }
+)
 
 export const accountSlice = createSlice({
   name: 'account',
@@ -15,8 +24,14 @@ export const accountSlice = createSlice({
       state.amount -= 1
     },
     incrementByAmount: (state, action) => {
+   
       state.amount += action.payload
     },
+    extraReducers:(builder)=> {
+      builder.addCase(getUSerAccount.fulfilled, (state,action) => {
+        state.amount = action.payload
+      })
+    }
   },
 })
 
