@@ -1,70 +1,48 @@
-# Getting Started with Create React App
+# redux/toolkit =
+ Redux toolkit is used to state mangement becuase in react usereducers if our application grows state mangement also grows and at some point of time our state grows so huge so that we are not able to manage it anymore that's why react-redux come inot the picture while react/redux is also so complx so thats why we use redux-toolkit instead of all state management , it will give us powerfull api that make our work easy and testable . 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+ # 1st step Slices - 
+ The 1st step to use redux/toolkit is use the createSlice it is a api build with redux/toolkit and we import it from redux/toolkit the ide behind is to create a reducer function with initial state , with name and type of reducers here  here create slice function tool 3 arguments name , initial state , and reducer object  eg. ==> createslice( name, initial state , reducr{}) , here in name we define the name of slice and in initial state we give the initial state while in reducer we define it as a reducer object where it has key value pairs of action creators , e.g increment : (state,action)+>{return state after perofroming some actions}   hence by this method it is very easy for us to create reducers , and in the end we exports all the named  reducers key from createslice function.action . and the whole createSlice function.rdeucers as export default . 
 
-## Available Scripts
+ # 2nd step : - 
+Then in the root componenet e.g index.js we make store with the help of  redux-toolkit we import configurestors it is an api of reduxtoolkit which provides the same functionallity of createstore() and the api took and reducers object with the key value pair of default exported createslice as an reduce .
 
-In the project directory, you can run:
+# 3rd step : - 
+    Then in 3rd step we import provider from react-redux which will help us to to drill the whole store in our application . 
 
-### `npm start`
+# 4th step : - 
+    then react give us the two hooks useDispatch() and useSelector() to manupulate our stores , while useDispatch give us a function to invoke the rducers object value function with dispatch(valuename()) here we have to import valuename() from the file and useslector give us the state value . 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+ # createAction() : - 
+ if you want to Actions without slices you can do it with the help of a createAction("name/reducername") it will took action name/reducername as an argument and we have to export it then it will automatically attach to the reudcer name 
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+ # createReducer() : - 
+it will take two argument initial state and and call back function with the build as an argument than we have to use build.addcase eg ==> const rewardReducer = createReducer(initialState, (builder) => {
+    builder
+      .addCase(increment, (state, action) => {
+        state.points++
+      }).addCase(incrementByAmount, (state, action) => {
+        state.points += action.payload
+      })
+     
+  })
 
-### `npm test`
+  as you can see in the example above the builder function took two arguments first the actioncreator and the normal state and action now you can do what you want with it.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+  # extraReducer() : - 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  const incrementByAmount = createAction("account/incrementByAmount");
+  --------------------------------------------------------------------
+    the above line will make a reducer that is attach with name account and reducer incrementByAmount
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    now whenever the above reducer will call our below code will execute the action 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    extraReducers: (builder) => {
+    builder.addCase(incrementByAmount, (state, action) => {
+      if (action.payload >= 100) {
+        state.points += 1;
+      }
+    });
+  },
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
